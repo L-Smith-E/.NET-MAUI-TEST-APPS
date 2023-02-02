@@ -1,24 +1,37 @@
-﻿namespace ToDoMAUIClient;
+﻿//using Java.Lang;
+using System.Diagnostics;
+using ToDoMAUIClient.DataServices;
+
+namespace ToDoMAUIClient;
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
+    private readonly IRestDataService _dataService;
 
-	public MainPage()
+    public MainPage(IRestDataService dataService)
 	{
 		InitializeComponent();
+
+		_dataService = dataService;
 	}
 
-	private void OnCounterClicked(object sender, EventArgs e)
+	protected async override void OnAppearing()
 	{
-		count++;
+		base.OnAppearing();
 
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
-
-		SemanticScreenReader.Announce(CounterBtn.Text);
+		collectionView.ItemsSource = await _dataService.GetAllToDosAsync();
 	}
+
+	async void OnAddToDoClicked(object sender, EventArgs e)
+	{
+		Debug.WriteLine("---> Add button clicked");
+        collectionView.ItemsSource = await _dataService.GetAllToDosAsync();
+    }
+
+	async void OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+	{
+        Debug.WriteLine("---> Item Change Clicked!");
+    }
+	
 }
 

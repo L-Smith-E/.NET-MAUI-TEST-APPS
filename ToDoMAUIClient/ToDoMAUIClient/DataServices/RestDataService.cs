@@ -1,6 +1,6 @@
 ﻿//using Android.OS;
-using Microsoft.Maui.Controls;
-using System;
+//using Microsoft.Maui.Controls;
+//using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -23,7 +23,7 @@ namespace ToDoMAUIClient.DataServices
         {
             _httpClient = new HttpClient();
             //Android does not like using localhost and has a development ip address specifically made for it, use https in production code 
-            _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5309" : "https://localhost:7209";
+            _baseAddress = DeviceInfo.Platform == DevicePlatform.Android ? "http://10.0.2.2:5209" : "https://localhost:7209";
             //string interpolation
             _url = $"{_baseAddress}/api";
 
@@ -79,7 +79,7 @@ namespace ToDoMAUIClient.DataServices
 
             try
             {
-                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/todo/{id}");
+                HttpResponseMessage response = await _httpClient.DeleteAsync($"{_url}/todo{id}");
 
                 if (response.IsSuccessStatusCode)
                 {

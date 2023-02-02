@@ -1,4 +1,7 @@
-﻿namespace ToDoMAUIClient;
+﻿using Microsoft.Extensions.DependencyInjection;
+using ToDoMAUIClient.DataServices;
+
+namespace ToDoMAUIClient;
 
 public static class MauiProgram
 {
@@ -12,6 +15,10 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
+
+		builder.Services.AddSingleton<IRestDataService, RestDataService>();
+
+		builder.Services.AddSingleton<MainPage>();
 
 		return builder.Build();
 	}
